@@ -3,19 +3,17 @@ export interface LoginPayload {
   password: string;
 }
 
-export interface LoginResponse {
+export type LoginResponse = {
   accessToken: string;
   refreshToken: string;
   user: User;
-}
+};
 
 export interface User {
   _id: string;
   name: string;
   email: string;
   username: string;
-  password: string;
   createdAt: string;
   updatedAt: string;
-  refreshToken: string;
 }

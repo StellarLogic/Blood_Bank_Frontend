@@ -1,3 +1,4 @@
+import { tokenManager } from "@/app/utils/tokenManager/tokenManager";
 import Axios from "axios";
 import { toast } from "sonner";
 
@@ -15,12 +16,13 @@ axiosInstance.interceptors.request.use(
   async (config) => {
     if (WITHOUT_TOKEN_URLS.includes(config.url || "")) return config;
 
-    const token = localStorage.getItem("token");
+    const token = tokenManager.getAccessToken();
+    console.log("🚀 ~ file: axios.ts:20 ~ token:", token);
 
     if (token) {
-      config.headers["Content-Type"] = "application/json";
       config.headers.Authorization = `Bearer ${token}`;
     }
+    console.log("🚀 ~ file: axios.ts:17 ~ config:", config);
     return config;
   },
   (error) => {

@@ -2,12 +2,11 @@
 
 import { login } from "@/app/actions/auth/auth";
 import { AppDispatch, useAppSelector } from "@/app/services/store/store";
-import { Button, TextFieldInput } from "@radix-ui/themes";
+import { TextFieldInput } from "@radix-ui/themes";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Toaster, toast } from "sonner";
 import * as Yup from "yup";
 
 const schema = Yup.object().shape({
@@ -15,9 +14,7 @@ const schema = Yup.object().shape({
   password: Yup.string().required().min(3).label("Password"),
 });
 
-type Props = {};
-
-const LoginForm = ({}: Props) => {
+const LoginForm = () => {
   const router = useRouter();
 
   const dispatch = useDispatch<AppDispatch>();
