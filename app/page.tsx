@@ -1,9 +1,11 @@
-import Image from "next/image";
-
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className="text-red-300">Hello</h1>
+    <main>
+      <div className="h-[80vh] flex justify-center items-center">
+        <h1 className="text-red-500 font-bold text-4xl">
+          Welcome To Blood Bank
+        </h1>
+      </div>
     </main>
   );
 }
