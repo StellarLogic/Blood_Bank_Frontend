@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import AuthCheck from "./components/common/authCheck/AuthCheck";
 import Container from "./components/common/container/Container";
 import Header from "./components/common/header/Header";
-import ProviderContainer from "./components/common/provider/ProviderContainer";
+import Providers from "./components/common/providers/Providers";
 import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,13 +18,13 @@ type Props = {
 export default function RootLayout({ children }: Props) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <ProviderContainer>
+      <body className={` ${inter.className}`}>
+        <Providers>
           <Container>
             <Header />
           </Container>
           {children}
-        </ProviderContainer>
+        </Providers>
       </body>
     </html>
   );

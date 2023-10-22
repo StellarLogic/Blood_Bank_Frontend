@@ -10,7 +10,8 @@ import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 
 const schema = Yup.object().shape({
-  name: Yup.string().required().label("Name"),
+  firstName: Yup.string().required().label("First Name"),
+  lastName: Yup.string().required().label("Last Name"),
   email: Yup.string().required().email().label("Email"),
   username: Yup.string().required().label("User Name"),
   password: Yup.string().required().min(3).label("Password"),
@@ -27,7 +28,8 @@ const RegisterForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      name: "",
+      firstName: "",
+      lastName: "",
       email: "",
       username: "",
       password: "",
@@ -50,19 +52,30 @@ const RegisterForm = () => {
     <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
       <div className="">
         <TextFieldInput
-          placeholder="Enter Name"
-          value={values.name}
+          placeholder="Enter First Name"
+          value={values.firstName}
           onChange={handleChange}
-          name="name"
+          name="firstName"
         />
-        {errors.name && touched.name && (
-          <span className="text-xs text-red-500">{errors.name}</span>
+        {errors.firstName && touched.firstName && (
+          <span className="text-xs text-red-500">{errors.firstName}</span>
+        )}
+      </div>
+      <div className="">
+        <TextFieldInput
+          placeholder="Enter Last Name"
+          value={values.lastName}
+          onChange={handleChange}
+          name="lastName"
+        />
+        {errors.lastName && touched.lastName && (
+          <span className="text-xs text-red-500">{errors.lastName}</span>
         )}
       </div>
       <div className="">
         <TextFieldInput
           placeholder="Enter Email"
-          value={values.name}
+          value={values.email}
           onChange={handleChange}
           name="email"
         />

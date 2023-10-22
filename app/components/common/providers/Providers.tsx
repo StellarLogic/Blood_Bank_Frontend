@@ -12,14 +12,15 @@ type Props = {
   children: React.ReactNode;
 };
 
-const ProviderContainer = ({ children }: Props) => {
+const Providers = ({ children }: Props) => {
   return (
     <Provider store={store}>
-      <AuthCheck />
-      <Toaster position="bottom-right" closeButton richColors />
-      <Theme>{children}</Theme>
+      <AuthCheck>
+        <Toaster position="bottom-right" closeButton richColors />
+        <Theme>{children}</Theme>
+      </AuthCheck>
     </Provider>
   );
 };
 
-export default ProviderContainer;
+export default Providers;

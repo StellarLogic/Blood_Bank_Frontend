@@ -1,7 +1,8 @@
 import { LoginResponse } from "./login.type";
 
 export interface RegisterPayload {
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   username: string;
   password: string;

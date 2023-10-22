@@ -11,7 +11,8 @@ export type LoginResponse = {
 
 export interface User {
   _id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   username: string;
   createdAt: string;

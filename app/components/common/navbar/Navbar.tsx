@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
+import ProfileDropDown from "../header/ProfileDropDown";
 
 type Props = {};
 
@@ -22,25 +23,18 @@ const Navbar = (props: Props) => {
   };
 
   return (
-    <ul className="flex justify-end items-center gap-4">
+    <ul className="flex items-center justify-end gap-4">
       {navList.map(({ label, id, href, isButton }) => {
         const isActive = pathname === href;
 
         if (isAuthenticated && label === "Register") return null;
 
         if (isAuthenticated && label === "Login")
-          return (
-            <button
-              className="px-4 py-2 rounded-md text-sm font-medium bg-red-200 border-2 border-red-200 text-red-500 hover:bg-transparent hover:border-red-500"
-              onClick={handleLogOut}
-              key={id}
-            >
-              Log Out
-            </button>
-          );
+          return <ProfileDropDown key={id} handleLogOut={handleLogOut} />;
 
         return (
           <Link
+            key={id}
             href={href}
             className={classNames("px-4 py-2 rounded-md text-sm font-medium", {
               "bg-red-200 border-2 border-red-200 text-red-500 hover:bg-transparent hover:border-red-500":
@@ -48,7 +42,6 @@ const Navbar = (props: Props) => {
               "text-gray-500 ": !isActive && !isButton,
               "text-black": isActive && !isButton,
             })}
-            key={id}
           >
             {label}
           </Link>
