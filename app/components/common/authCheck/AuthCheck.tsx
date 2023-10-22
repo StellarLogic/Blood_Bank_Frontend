@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { getCurrentUser } from "../../../actions/auth/auth";
 import { AppDispatch, useAppSelector } from "../../../services/store/store";
 import { tokenManager } from "../../../utils/tokenManager/tokenManager";
+import ProfileModel from "../../profileModal/ProfileModel";
 
 type Props = {
   children: React.ReactNode;
@@ -11,7 +12,9 @@ type Props = {
 
 const AuthCheck = ({ children }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { isLoading, isAuthenticated } = useAppSelector((state) => state.auth);
+  const { isLoading, isAuthenticated, user } = useAppSelector(
+    (state) => state.auth
+  );
 
   useEffect(() => {
     const token = tokenManager.getAccessToken();
@@ -21,13 +24,18 @@ const AuthCheck = ({ children }: Props) => {
     }
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   if (!isLoading && isAuthenticated) {
-  //     dispatch(getCurrentUserProfile({}));
-  //   }
-  // }, [dispatch, isAuthenticated, isLoading]);
+  useEffect(() => {
+    if (!isLoading && isAuthenticated && user) {
+      dispatch(getCurrentUserProfile({}));
+    }
+  }, [dispatch, isAuthenticated, isLoading, user]);
 
-  return <>{children}</>;
+  return (
+    <>
+      <ProfileModel />
+      {children}
+    </>
+  );
 };
 
 export default AuthCheck;

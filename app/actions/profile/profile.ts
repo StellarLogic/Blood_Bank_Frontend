@@ -16,14 +16,6 @@ export const getCurrentUserProfile = createAsyncThunk<
   try {
     const { data } = await axiosInstance.get("/profile/current");
 
-    toast.success("Login successful");
-
-    const accessToken = data.accessToken;
-    const refreshToken = data.refreshToken;
-
-    tokenManager.setAccessToken(accessToken);
-    tokenManager.setRefreshToken(refreshToken);
-
     return data;
   } catch (err) {
     const error = err as AppError;

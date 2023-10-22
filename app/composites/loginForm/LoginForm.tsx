@@ -22,8 +22,8 @@ const LoginForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: "ankit@gmail.com",
-      password: "ankit",
+      email: "atul@gmail.com",
+      password: "atul",
     },
 
     validationSchema: schema,
@@ -64,7 +64,7 @@ const LoginForm = () => {
         )}
       </div>
       <button
-        className="text-white bg-red-500 py-2 text-sm rounded-md"
+        className="py-2 text-sm text-white bg-red-500 rounded-md"
         type="submit"
         disabled={isLoading}
       >

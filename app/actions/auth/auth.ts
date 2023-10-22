@@ -74,13 +74,11 @@ export const getCurrentUser = createAsyncThunk<
 >("auth/user", async ({ token: string }, { rejectWithValue }) => {
   try {
     const { data } = await axiosInstance.get("/user/current");
-
+    toast.success("Login successful");
     return data;
   } catch (err) {
     const error = err as AppError;
-    if (error.type == "api") {
-      toast.error(error.message);
-    }
+    tokenManager.clearLocalStorage();
     return rejectWithValue(error);
   }
 });

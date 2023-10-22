@@ -1,6 +1,7 @@
 import { tokenManager } from "@/app/utils/tokenManager/tokenManager";
 import Axios from "axios";
 import { toast } from "sonner";
+import { AppError } from "./type";
 
 export const BASE_URL = "http://localhost:8080/api/v1";
 
@@ -10,13 +11,14 @@ const axiosInstance = Axios.create({
   timeout: 10000,
 });
 
-const WITHOUT_TOKEN_URLS = ["/login", "/register"];
+const WITHOUT_TOKEN_URLS = ["/auth/login", "/auth/register"];
 
 axiosInstance.interceptors.request.use(
   async (config) => {
     if (WITHOUT_TOKEN_URLS.includes(config.url || "")) return config;
 
     const token = tokenManager.getAccessToken();
+    console.log("🚀 ~ file: axios.ts:20 ~ token:", token);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -32,38 +34,28 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   (error) => {
+    let body: AppError;
     if (Axios.isAxiosError(error)) {
       if (error.response) {
         const { status, data } = error.response;
-        return Promise.reject({
+        body = {
           type: "api",
           status,
           message: data.message,
-        });
+        };
       } else if (error.request) {
-        const body = { type: "network", message: "Network Error" };
-
-        toast.error("Error", {
-          description: body.message,
-        });
-
-        return Promise.reject(body);
+        body = { type: "network", message: "Network Error" };
       } else {
-        const body = { type: "network", message: "An error occurred" };
-        toast.error("Error", {
-          description: body.message,
-        });
-
-        return Promise.reject(body);
+        body = { type: "network", message: "An error occurred" };
       }
     } else {
-      const body = { type: "network", message: "An unexpected error occurred" };
-
-      toast.error("Error", {
-        description: body.message,
-      });
-      return Promise.reject(body);
+      body = { type: "network", message: "An unexpected error occurred" };
     }
+    toast.error("Error", {
+      description: body.message,
+    });
+
+    return Promise.reject(body);
   }
 );
 
