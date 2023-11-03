@@ -22,7 +22,9 @@ const LoginForm = ({ successCallBack = () => {} }: Prop) => {
         if (!login.rejected.match(res)) {
           return successCallBack();
         }
-      } catch (error) {}
+      } catch (error) {
+        console.log("🚀 ~ file: LoginForm.tsx:26 ~ onSubmit: ~ error:", error);
+      }
     },
   });
 
@@ -32,7 +34,7 @@ const LoginForm = ({ successCallBack = () => {} }: Prop) => {
         <Input
           placeholder="User Name/Email"
           label="User Name/Email"
-          name="userName"
+          name="email"
         />
         <Input
           placeholder="Password"

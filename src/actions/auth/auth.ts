@@ -3,7 +3,7 @@ import { AppError } from "@/services/type";
 import { notificationManager } from "@/utils/notificationManager";
 import { tokenManager } from "@/utils/tokenManager";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { LoginPayload, LoginResponseData } from "./login.type";
+import { LoginPayload, LoginResponse } from "./login.type";
 import { RegisterPayload } from "./register.types";
 import { Token, UserResponseReturn } from "./user.type";
 
@@ -11,18 +11,19 @@ import { Token, UserResponseReturn } from "./user.type";
 /*                                    LOGIN                                   */
 /* -------------------------------------------------------------------------- */
 export const login = createAsyncThunk<
-  LoginResponseData,
+  LoginResponse,
   LoginPayload,
   { rejectValue: AppError }
 >("auth/login", async (payload: LoginPayload, { rejectWithValue }) => {
   try {
     const { data } = await axiosInstance.post("/auth/login", payload);
 
-    const token = data.data.token;
-    notificationManager.success(data.message);
-    tokenManager.storeToken(token);
+    const accessToken = data.accessToken;
+    const refreshToken = data.refreshToken;
+    notificationManager.success("Login SuccessFull");
+    tokenManager.storeAccessRefreshToken(accessToken, refreshToken);
 
-    return data.data;
+    return data;
   } catch (err) {
     const error = err as AppError;
     if (error.type == "api") {
@@ -60,7 +61,7 @@ export const getUserProfile = createAsyncThunk<
   { rejectValue: AppError }
 >("auth/currentUser", async (token: Token, { rejectWithValue }) => {
   try {
-    const { data } = await axiosInstance.get("/user");
+    const { data } = await axiosInstance.get("/profile");
     return {
       data: data.data,
       token,
@@ -68,7 +69,7 @@ export const getUserProfile = createAsyncThunk<
   } catch (err) {
     const error = err as AppError;
     if (error.type == "api") {
-      tokenManager.removeToken();
+      tokenManager.clearStorage();
       notificationManager.error(error.message);
     }
     return rejectWithValue(error);

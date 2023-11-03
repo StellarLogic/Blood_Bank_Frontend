@@ -5,7 +5,8 @@ import { AuthState } from "./type";
 const initialState: AuthState = {
   isLoading: false,
   isAuthenticated: false,
-  token: null,
+  accessToken: null,
+  refreshToken: null,
   error: null,
   user: null,
 };
@@ -15,7 +16,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     loginOnRefresh: (state, { payload }) => {
-      state.token = payload;
+      state.accessToken = payload;
       state.isAuthenticated = true;
     },
 
@@ -23,7 +24,7 @@ const authSlice = createSlice({
       localStorage.removeItem("token");
       state.isLoading = false;
       state.isAuthenticated = false;
-      state.token = null;
+      state.accessToken = null;
       state.error = null;
       state.user = null;
     },
@@ -40,8 +41,9 @@ const authSlice = createSlice({
     });
     builder.addCase(login.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.token = payload.token;
-      state.user = payload.userProfile;
+      state.accessToken = payload.accessToken;
+      state.refreshToken = payload.refreshToken;
+      state.user = payload.user;
       state.isAuthenticated = true;
     });
 
@@ -61,7 +63,7 @@ const authSlice = createSlice({
     });
     builder.addCase(getUserProfile.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.token = payload.token;
+      state.accessToken = payload.token;
       state.user = payload.data;
       state.isAuthenticated = true;
     });

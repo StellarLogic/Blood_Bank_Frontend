@@ -1,3 +1,4 @@
+import { tokenManager } from "@/utils/tokenManager";
 import { notifications } from "@mantine/notifications";
 import Axios from "axios";
 
@@ -7,9 +8,6 @@ const axiosInstance = Axios.create({
   baseURL: BASE_URL,
   maxBodyLength: Infinity,
   timeout: 10000,
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  },
 });
 
 const WITHOUT_TOKEN_URLS = ["/auth/login", "/auth/register"];
@@ -18,16 +16,15 @@ axiosInstance.interceptors.request.use(
   async (config) => {
     if (WITHOUT_TOKEN_URLS.includes(config.url || "")) return config;
 
-    const token = localStorage.getItem("token");
+    const { accessToken } = tokenManager.getTokens();
 
-    if (token) {
+    if (accessToken) {
       config.headers["Content-Type"] = "application/json";
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
     return config;
   },
   (error) => {
-    console.log("🚀 ~ file: axios.ts:33 ~ error:", error);
     return Promise.reject(error);
   }
 );

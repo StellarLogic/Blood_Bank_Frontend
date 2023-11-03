@@ -1,6 +1,7 @@
 import { getUserProfile } from "@/actions/auth/auth";
 import Header from "@/composites/header/Header";
 import { AppDispatch } from "@/services/store";
+import { tokenManager } from "@/utils/tokenManager";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
@@ -10,9 +11,9 @@ const PreAuthLayout = () => {
 
   useEffect(() => {
     const prepareState = async () => {
-      const token = await localStorage.getItem("token");
-      if (token) {
-        await dispatch(getUserProfile(token));
+      const { accessToken } = tokenManager.getTokens();
+      if (accessToken) {
+        await dispatch(getUserProfile(accessToken));
       }
     };
 

@@ -1,10 +1,8 @@
-import images from "@/assets/images/Images";
 import Button from "@/components/button/Button";
 import Container from "@/components/container/Container";
 import { RootState } from "@/services/store";
-
-import Image from "@/components/image/Image";
 import { Loader } from "@mantine/core";
+import { FaHandHoldingWater } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import ProfileDropDown from "../profileDropDown/ProfileDropDown";
@@ -39,12 +37,11 @@ const Header = () => {
   return (
     <Container>
       <div className="top-0 flex items-center justify-between py-4 ">
-        <Link to="/">
-          <Image
-            src={images.logoColored}
-            alt=""
-            className="w-[150px] md:w-[200px]"
-          />
+        <Link
+          to="/"
+          className="flex items-center justify-center w-12 h-12 rounded-full bg-primary-500"
+        >
+          <FaHandHoldingWater size={28} className="text-danger-500" />
         </Link>
         {renderActions()}
       </div>

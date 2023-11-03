@@ -3,33 +3,22 @@
 /* -------------------------------------------------------------------------- */
 
 export type LoginPayload = {
-  userName: string;
+  email: string;
   password: string;
 };
 
-export type LoginResponse = {
-  success: null;
-  message: string;
-  data: LoginResponseData;
-  metadata: null;
-  status: number;
-  action: null;
-  signature: null;
-  type: string;
-  id: null;
-  ok: boolean;
-};
+export interface LoginResponse {
+  accessToken: string;
+  refreshToken: string;
+  user: User;
+}
 
-export type LoginResponseData = {
-  userProfile: LoginResponseDataUserProfile;
-  token: string;
-};
-
-export type LoginResponseDataUserProfile = {
-  name: string;
+export interface User {
+  _id: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  mobile: string;
-  gender: null;
-  role: string;
-  userId: string;
-};
+  username: string;
+  createdAt: string;
+  updatedAt: string;
+}

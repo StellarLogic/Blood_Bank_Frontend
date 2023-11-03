@@ -7,11 +7,11 @@ const button = cva(
     variants: {
       intent: {
         primary:
-          "bg-primary-500 text-white border-primary-500 hover:bg-transparent hover:text-primary-500 hover:text-primary-500",
+          "bg-primary-500 text-white border-primary-500 hover:bg-transparent hover:text-primary-500 ",
         danger:
-          "bg-danger-500 text-white border-danger-500 hover:bg-transparent hover:text-danger-500 hover:text-danger-500 ",
+          "bg-danger-500 text-white border-danger-500 hover:bg-transparent hover:text-danger-500 ",
         white:
-          "bg-white border-white text-text-500 hover:bg-transparent hover:text-white hover:text-white",
+          "bg-white border-white text-text-500 hover:bg-transparent hover:text-white",
         ghost: "text-primary-500 border-none",
       },
       width: {
@@ -40,12 +40,13 @@ type Props = ButtonProps & {
 };
 
 const Button = forwardRef<HTMLButtonElement, Props>(
-  ({ children, intent, width, size, onClick }: Props, ref) => {
+  ({ children, intent, width, size, onClick, ...props }: Props, ref) => {
     return (
       <button
         className={button({ intent, width, size })}
         onClick={onClick}
         ref={ref}
+        {...props}
       >
         {children}
       </button>

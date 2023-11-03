@@ -2,18 +2,18 @@ import axiosInstance from "@/services/axios";
 import { AppError } from "@/services/type";
 import { notificationManager } from "@/utils/notificationManager";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { CategoriesResponse } from "./categories.type";
+import { ProfileResponse } from "./profile.type";
 
 /* -------------------------------------------------------------------------- */
 /*                               GET CATEGORIES                               */
 /* -------------------------------------------------------------------------- */
-export const getCategoriesList = createAsyncThunk<
-  CategoriesResponse,
+export const getProfile = createAsyncThunk<
+  ProfileResponse,
   void,
   { rejectValue: AppError }
 >("auth/login", async (_, { rejectWithValue }) => {
   try {
-    const { data } = await axiosInstance.get("/categories");
+    const { data } = await axiosInstance.get("/profile");
 
     return data.data;
   } catch (err) {
