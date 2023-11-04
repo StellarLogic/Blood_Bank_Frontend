@@ -13,6 +13,8 @@ export interface LoginResponse {
   user: User;
 }
 
+export type Tokens = Omit<LoginResponse, "user">;
+
 export interface User {
   _id: string;
   firstName: string;

@@ -1,4 +1,4 @@
-import { getUserProfile, login } from "@/actions/auth/auth";
+import { getCurrentUser, login } from "@/actions/auth/auth";
 import { createSlice } from "@reduxjs/toolkit";
 import { AuthState } from "./type";
 
@@ -56,18 +56,19 @@ const authSlice = createSlice({
     /* -------------------------------------------------------------------------- */
     /*                                   PROFILE                                  */
     /* -------------------------------------------------------------------------- */
-    builder.addCase(getUserProfile.pending, (state) => {
+    builder.addCase(getCurrentUser.pending, (state) => {
       state.isAuthenticated = false;
       state.isLoading = true;
       state.error = null;
     });
-    builder.addCase(getUserProfile.fulfilled, (state, { payload }) => {
+    builder.addCase(getCurrentUser.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.accessToken = payload.token;
-      state.user = payload.data;
+      state.accessToken = payload.accessToken;
+      state.refreshToken = payload.refreshToken;
+      state.user = payload.user;
       state.isAuthenticated = true;
     });
-    builder.addCase(getUserProfile.rejected, (state, { payload }) => {
+    builder.addCase(getCurrentUser.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.error = payload;
       state.isAuthenticated = false;

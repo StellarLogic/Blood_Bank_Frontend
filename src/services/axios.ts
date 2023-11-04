@@ -19,7 +19,6 @@ axiosInstance.interceptors.request.use(
     const { accessToken } = tokenManager.getTokens();
 
     if (accessToken) {
-      config.headers["Content-Type"] = "application/json";
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
     return config;

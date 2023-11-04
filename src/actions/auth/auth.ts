@@ -3,9 +3,8 @@ import { AppError } from "@/services/type";
 import { notificationManager } from "@/utils/notificationManager";
 import { tokenManager } from "@/utils/tokenManager";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { LoginPayload, LoginResponse } from "./login.type";
+import { LoginPayload, LoginResponse, Tokens } from "./login.type";
 import { RegisterPayload } from "./register.types";
-import { Token, UserResponseReturn } from "./user.type";
 
 /* -------------------------------------------------------------------------- */
 /*                                    LOGIN                                   */
@@ -55,16 +54,17 @@ export const register = async (payload: RegisterPayload) => {
 /*                              GET USER PROFILE                              */
 /* -------------------------------------------------------------------------- */
 
-export const getUserProfile = createAsyncThunk<
-  UserResponseReturn,
-  Token,
+export const getCurrentUser = createAsyncThunk<
+  LoginResponse,
+  Tokens,
   { rejectValue: AppError }
->("auth/currentUser", async (token: Token, { rejectWithValue }) => {
+>("auth/get_current_user", async (payload: Tokens, { rejectWithValue }) => {
   try {
-    const { data } = await axiosInstance.get("/profile");
+    const { data } = await axiosInstance.get("/user/current");
     return {
-      data: data.data,
-      token,
+      accessToken: payload.accessToken,
+      refreshToken: payload.refreshToken,
+      user: data,
     };
   } catch (err) {
     const error = err as AppError;

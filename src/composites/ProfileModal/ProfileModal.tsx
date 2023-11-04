@@ -1,20 +1,23 @@
-import Button from "@/components/button/Button";
-import Input from "@/components/input/Input";
-import { Modal, ModalBaseBody } from "@mantine/core";
-import { FormikProvider, useFormik } from "formik";
-import React from "react";
+import { Modal, Stepper } from "@mantine/core";
+import { useState } from "react";
+import { AiOutlineUnorderedList } from "react-icons/ai";
+import { BiSolidFlag } from "react-icons/bi";
 import { ImProfile } from "react-icons/im";
+import FamilyForm from "./Steps/FamilyForm/FamilyForm";
+import ProfileForm from "./Steps/ProfileForm/ProfileForm";
 
 type Props = {
   opened: boolean;
 };
 
 const ProfileModal = ({ opened }: Props) => {
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-    },
-  });
+  const [active, setActive] = useState(0);
+
+  const nextStep = () =>
+    setActive((current) => (current < 3 ? current + 1 : current));
+
+  const prevStep = () =>
+    setActive((current) => (current > 0 ? current - 1 : current));
 
   return (
     <Modal
@@ -32,28 +35,34 @@ const ProfileModal = ({ opened }: Props) => {
       }}
       size={"xl"}
     >
-      <div className="px-4 py-8 bg-primary-200">
-        <div className="text-center">
-          <ImProfile size={80} className="mx-auto mb-4 text-primary-500" />
-          <h3 className="text-2xl font-bold text-primary-500">
-            Let's update your profile...
-          </h3>
-          <p>Because employers love and prefer good completed profiles</p>
-        </div>
-
-        <FormikProvider value={formik}>
-          <div className="grid grid-cols-2 gap-4 py-3">
-            <Input placeholder="Email" label="Email" name="email" />
-            <Input placeholder="Email" label="Email" name="email" />
-            <Input placeholder="Email" label="Email" name="email" />
-            <Input placeholder="Email" label="Email" name="email" />
-            <Input placeholder="Email" label="Email" name="email" />
-            <Input placeholder="Email" label="Email" name="email" />
-            <div className="col-span-2 text-center">
-              <Button>Submit</Button>
-            </div>
-          </div>
-        </FormikProvider>
+      <div className="px-4 py-8 bg-white">
+        <Stepper
+          active={active}
+          onStepClick={setActive}
+          completedIcon={<ImProfile />}
+        >
+          <Stepper.Step
+            icon={<ImProfile />}
+            label="Step 1"
+            description="Create Profile"
+          >
+            <ProfileForm nextStep={nextStep} />
+          </Stepper.Step>
+          <Stepper.Step
+            icon={<AiOutlineUnorderedList />}
+            label="Step 2"
+            description="Add Family Members"
+          >
+            <FamilyForm nextStep={nextStep} />
+          </Stepper.Step>
+          <Stepper.Step
+            icon={<BiSolidFlag />}
+            label="Step 3"
+            description="Finish"
+          >
+            Finish
+          </Stepper.Step>
+        </Stepper>
       </div>
     </Modal>
   );

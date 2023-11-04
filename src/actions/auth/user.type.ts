@@ -1,20 +1,20 @@
-import { LoginResponseDataUserProfile } from "./login.type";
+// import { LoginResponse } from "./login.type";
 
-export type UserResponse = {
-  message: string;
-  data: LoginResponseDataUserProfile;
-  metadata: null;
-  status: number;
-  action: null;
-  signature: null;
-  type: string;
-  id: null;
-  ok: boolean;
-};
+// export type UserResponse = {
+//   message: string;
+//   data: LoginResponse;
+//   metadata: null;
+//   status: number;
+//   action: null;
+//   signature: null;
+//   type: string;
+//   id: null;
+//   ok: boolean;
+// };
 
-export type UserResponseReturn = {
-  data: LoginResponseDataUserProfile;
-  token: Token;
-};
+// export type UserResponseReturn = {
+//   data: LoginResponse;
+//   token: Token;
+// };
 
-export type Token = string;
+// export type Token = string;

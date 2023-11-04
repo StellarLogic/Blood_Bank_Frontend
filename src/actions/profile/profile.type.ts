@@ -52,3 +52,24 @@ export interface User {
   email: string;
   id: string;
 }
+
+export interface ProfilePayload {
+  phone: string;
+  dateOfBirth: DateOfBirthPayload;
+  gender: string;
+  donorStatus: boolean;
+  address: AddressPayload;
+}
+
+export interface DateOfBirthPayload {
+  date: string;
+  month: string;
+  year: string;
+}
+export interface AddressPayload {
+  street: string;
+  city: string;
+  state: string;
+  postalCode: string;
+  country: string;
+}

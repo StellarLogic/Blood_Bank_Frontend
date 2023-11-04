@@ -3,13 +3,14 @@ import { useAppSelector } from "@/services/store";
 import { LoadingOverlay } from "@mantine/core";
 
 const Home = () => {
-  const { data, isLoading } = useAppSelector((state) => state.profile);
+  const { isAuthenticated, isLoading } = useAppSelector((state) => state.auth);
+  const { data } = useAppSelector((state) => state.profile);
 
   if (isLoading) return <LoadingOverlay visible />;
 
   return (
     <>
-      <ProfileModal opened={!data} />
+      <ProfileModal opened={isAuthenticated && data == null} />
       Home
     </>
   );

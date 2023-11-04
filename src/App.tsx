@@ -1,5 +1,6 @@
 import { MantineProvider, createTheme } from "@mantine/core";
 import "@mantine/core/styles.css";
+import "@mantine/dates/styles.css";
 import { Notifications } from "@mantine/notifications";
 import "@mantine/notifications/styles.css";
 import { Suspense } from "react";
@@ -10,13 +11,13 @@ import { router } from "./routes/Routes";
 import { store } from "./services/store";
 
 const theme = createTheme({
-  /** Put your mantine theme override here */
+  colors: {},
 });
 
 const App = () => {
   return (
     <Provider store={store}>
-      <MantineProvider theme={theme}>
+      <MantineProvider>
         <Notifications position="bottom-right" />
         <Suspense fallback={<Fallback />}>
           <RouterProvider router={router} />
